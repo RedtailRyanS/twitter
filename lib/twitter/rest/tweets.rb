@@ -61,7 +61,7 @@ module Twitter
       def status(tweet, options = {})
         extended_path = options.delete(:tweet_mode)
         path = "/1.1/statuses/show/#{extract_id(tweet)}.json"
-        path = path + "?#{extended_path}" if extended_path.present?
+        path = path + "?tweet_mode=#{extended_path}" if extended_path.present?
         perform_get_with_object(path, options, Twitter::Tweet)
       end
 
