@@ -59,7 +59,10 @@ module Twitter
       # @param options [Hash] A customizable set of options.
       # @option options [Boolean, String, Integer] :trim_user Each tweet returned in a timeline will include a user object with only the author's numerical ID when set to true, 't' or 1.
       def status(tweet, options = {})
-        perform_get_with_object("/1.1/statuses/show/#{extract_id(tweet)}.json", options, Twitter::Tweet)
+        extended_path = options.delete(:tweet_mode)
+        path = "/1.1/statuses/show/#{extract_id(tweet)}.json"
+        path = path + "?#{extended_path}" if extended_path.present?
+        perform_get_with_object(path, options, Twitter::Tweet)
       end
 
       # Returns Tweets
